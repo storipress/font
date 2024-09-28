@@ -1,0 +1,60 @@
+name: Release
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  release-please:
+    name: Release Please
+    runs-on: self-hosted
+    outputs:
+      release_created: ${{ steps.release.outputs.release_created }}
+    steps:
+      - uses: google-github-actions/release-please-action@v4
+        id: release
+        with:
+          release-type: node
+  terraform:
+    if: ${{ needs.release-please.outputs.release_created }}
+    needs: release-please
+    name: Terraform
+    runs-on: self-hosted
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: yarn
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: ~1.5.0
+          cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+
+      - name: Build package
+        run: |
+          yarn
+          yarn build
+          yarn bundle
+          yarn test
+      
+      - name: Publish package
+        run: |
+          yarn npm publish --access private
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Terraform Init
+        id: init
+        run: cd terraform && terraform init
+      
+      - name: Terraform Apply
+        run: cd terraform && terraform apply -auto-approve -input=false
+        env:
+          TF_VAR_aws_access_key: ${{ secrets.AWS_ACCESS_KEY }}
+          TF_VAR_aws_secret_key: ${{ secrets.AWS_SECRET_KEY }}

@@ -1,0 +1,7 @@
+{
+  "public": "iconfont-v2.3.2",
+  "rewrites": [
+    { "source": "/", "destination": "demo.html" },
+    { "source": "/index.html", "destination": "demo.html" }
+  ]
+}

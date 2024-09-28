@@ -1,0 +1,43 @@
+name: Test
+
+on: [pull_request]
+
+jobs:
+  test:
+    name: Test
+    runs-on: self-hosted
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: yarn
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: ~1.5.0
+          cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+
+      - run: yarn
+      - run: yarn build
+
+      - name: Lint
+        run: |
+          yarn lint
+
+      - name: Test
+        run: |
+          yarn test
+
+      - name: Terraform Init
+        id: init
+        run: cd terraform && terraform init
+
+      - name: Terraform Validation
+        run: cd terraform && terraform validate
+        env:
+          TF_VAR_aws_access_key: ${{ secrets.AWS_ACCESS_KEY }}
+          TF_VAR_aws_secret_key: ${{ secrets.AWS_SECRET_KEY }}

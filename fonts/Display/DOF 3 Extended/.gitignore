@@ -1,0 +1,14 @@
+*.log
+*.2602gf
+*.dvi
+*.tfm
+*.indd
+*.idlk
+.DS_Store
+_sandbox
+_old
+_computer-modern
+source/mfpreview.sh
+missingcharacters.txt
+text
+documentation

@@ -1,0 +1,53 @@
+/* archia-thin */
+@font-face {
+  font-display: swap;
+  font-family: 'Archia';
+  font-style: normal;
+  font-weight: 100;
+  src: url('./archia-thin-webfont.woff2') format('woff2');
+}
+
+/* archia-light */
+@font-face {
+  font-display: swap;
+  font-family: 'Archia';
+  font-style: normal;
+  font-weight: 300;
+  src: url('./archia-light-webfont.woff2') format('woff2');
+}
+
+/* archia-regular */
+@font-face {
+  font-display: swap;
+  font-family: 'Archia';
+  font-style: normal;
+  font-weight: 400;
+  src: url('./archia-regular-webfont.woff2') format('woff2');
+}
+
+/* archia-medium */
+@font-face {
+  font-display: swap;
+  font-family: 'Archia';
+  font-style: normal;
+  font-weight: 500;
+  src: url('./archia-medium-webfont.woff2') format('woff2');
+}
+
+/* archia-semi-bold */
+@font-face {
+  font-display: swap;
+  font-family: 'Archia';
+  font-style: normal;
+  font-weight: 600;
+  src: url('./archia-semibold-webfont.woff2') format('woff2');
+}
+
+/* archia-bold */
+@font-face {
+  font-display: swap;
+  font-family: 'Archia';
+  font-style: normal;
+  font-weight: 700;
+  src: url('./archia-bold-webfont.woff2') format('woff2');
+}
